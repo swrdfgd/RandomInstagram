@@ -11,6 +11,23 @@ const daftarFire = ['AIzaSyB7TX3CfUSUBnWnNP9CGBjLzmfIeo6SpfM','AIzaSyCXN3jgZPhm0
 
 const CSE_ID  = '936670722b64b414c';
 
+function generateRandomKeyword() {
+      let keyword = '';
+      while (Math.random() < 1/2 || keyword.length < 1) {
+        let pilihanKeyword = wordGen();
+		if (Math.random() < 1/2){
+			let bagian = pilihanKeyword.split(/[-–—\/,:.;()\[\]\s]+/);
+			for (let i = 0; i < bagian.length; i++) {
+			  if (Math.random() < 1/2) keyword += bagian[i] + ' ';
+			}
+		}
+		else keyword += pilihanKeyword + ' ';
+      }
+      keyword = keyword.trim();
+	  
+      return keyword + `allinurl: https://www.instagram.com/reel/`;
+}
+
 /* ===========================
    RANDOM STRING GENERATOR
 =========================== */
@@ -110,7 +127,13 @@ generateBtn.addEventListener("click", async () => {
   statusText.innerText = "Searching for a random reel...";
 
   while (true) {
-    const keyword = genRandomCode();
+	let keyword = '';
+	if (Math.random() < 0.5){
+		keyword = generateRandomKeyword();
+	}
+	else{
+		keyword = genRandomCode();
+	}
     const link = await ambilLinkAcakDariGoogle(keyword);
 
     if (link) {
